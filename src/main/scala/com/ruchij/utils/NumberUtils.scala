@@ -2,12 +2,8 @@ package com.ruchij.utils
 
 object NumberUtils
 {
-  def squareRootCeiling(number: Int, previous: Int = 0): Int =
-  {
-    val next = previous + 1
-
-    if (next * next >= number) next else squareRootCeiling(number, next)
-  }
+  def squareRootCeiling(number: Int, current: Int = 1): Int =
+    if (current * current >= number) current else squareRootCeiling(number, current + 1)
 
   def multiplications(number: Int): List[(Int, Int)] =
     (1 to squareRootCeiling(number)).toList
