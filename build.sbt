@@ -1,3 +1,4 @@
+import Dependencies._
 
 lazy val root = (project in file("."))
   .settings(
@@ -6,5 +7,8 @@ lazy val root = (project in file("."))
       scalaVersion := "2.12.4",
       version      := "0.1.0-SNAPSHOT"
     )),
-    name := "down-to-zero"
+    name := "down-to-zero",
+    libraryDependencies ++= Seq(
+      scalaTest % Test
+    )
   )

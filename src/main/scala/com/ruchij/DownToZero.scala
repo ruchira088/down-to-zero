@@ -1,18 +1,20 @@
 package com.ruchij
 
-import com.ruchij.utils.NumberUtils._
-
 object DownToZero
 {
-  def calculate(number: Int): List[Int] =
-    if (number == 0)
-      List.empty
-    else
-    number :: calculate(nextStepNumber(number))
+  import utils.NumberUtils.multiplications
 
-  private def nextStepNumber(number: Int): Int =
-    Integer.min(
-      (multiplications _).andThen(lowestMaxInMultiplicationPair)(number).getOrElse(number),
-      number -  1
-    )
+  def calculate(inputNumber: Int): List[Int] =
+    (1 to inputNumber).toList.foldLeft(Map(0 -> List.empty[Int])) {
+      case (mappings, number) => {
+
+        val nextValues = (number - 1) :: multiplications(number)
+          .map { case (a, b) => Integer.max(a, b) }
+          .filter( _ != number)
+
+        val value = number :: nextValues.map(mappings).minBy(_.length)
+
+        mappings + (number -> value)
+      }
+    }(inputNumber)
 }
